@@ -27,6 +27,8 @@ class SharingController extends Controller {
 
         $sharing->save();
 
+        print_r($sharing->errors);
+
         $client->user->send('SharingResponse', [
             'id' => $sharing->id,
             'key' => $sharing->key,
