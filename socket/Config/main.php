@@ -20,6 +20,6 @@ return [
         'port' => 8080,
         'count' => 1
     ],
-    'components' => require __DIR__ . '/Component/main.php',
+    'components' => [],
     'params' => $params,
 ];

@@ -28,6 +28,7 @@ class AppController extends Controller {
         $client = Yii::$app->webSocketClient;
 
         $client->send('local-client:call-address', [
+            'workerId' => $sharing->worker_id,
             'connectionId' => $sharing->connection_id,
             'requestId' => $requestId,
             //

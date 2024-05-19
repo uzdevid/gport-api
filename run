@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 /**
- * Yii console bootstrap file.
+ * Yii websocket bootstrap file.
  */
 
 use UzDevid\WebSocket\Application;

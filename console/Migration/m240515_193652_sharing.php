@@ -27,7 +27,7 @@ class m240515_193652_sharing extends Migration {
             'remote_address' => $this->string(32)->notNull(),
             'local_address' => $this->string(64)->notNull(),
 
-            'connection_id' => $this->integer()->notNull(),
+            'connection_id' => $this->char(36)->notNull(),
 
             'active' => $this->integer()->notNull(),
             'is_active' => $this->boolean()->notNull(),

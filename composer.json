@@ -18,7 +18,7 @@
     "firebase/php-jwt": "^6.10.0",
     "yiisoft/hydrator": "^1.1.0",
     "guzzlehttp/guzzle": "^7.8",
-    "uzdevid/yii2-websocket": "dev-main",
+    "uzdevid/yii2-websocket": "^1.0.0",
     "ext-zlib": "*"
   },
   "require-dev": {

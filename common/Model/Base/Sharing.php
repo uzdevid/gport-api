@@ -12,7 +12,7 @@ use Yii;
  * @property string $key
  * @property string $remote_address
  * @property string $local_address
- * @property int $connection_id
+ * @property string $connection_id
  * @property int $active
  * @property bool $is_active
  * @property string $created_time
@@ -35,13 +35,14 @@ class Sharing extends \yii\db\ActiveRecord
         return [
             [['user_id', 'key', 'remote_address', 'local_address', 'connection_id', 'active', 'is_active', 'created_time'], 'required'],
             [['user_id'], 'string'],
-            [['connection_id', 'active'], 'default', 'value' => null],
-            [['connection_id', 'active'], 'integer'],
+            [['active'], 'default', 'value' => null],
+            [['active'], 'integer'],
             [['is_active'], 'boolean'],
             [['created_time'], 'safe'],
             [['key'], 'string', 'max' => 4],
             [['remote_address'], 'string', 'max' => 32],
             [['local_address'], 'string', 'max' => 64],
+            [['connection_id'], 'string', 'max' => 36],
             [['key'], 'unique'],
         ];
     }
