@@ -1901,16 +1901,16 @@
         },
         {
             "name": "uzdevid/yii2-websocket",
-            "version": "1.0.2",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/uzdevid/yii2-websocket.git",
-                "reference": "979fa0f9c06395ceb2bcbe390ab369f463cab00f"
+                "reference": "8a52b72f37f4124e7e59ed697da516f9edc3701c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/uzdevid/yii2-websocket/zipball/979fa0f9c06395ceb2bcbe390ab369f463cab00f",
-                "reference": "979fa0f9c06395ceb2bcbe390ab369f463cab00f",
+                "url": "https://api.github.com/repos/uzdevid/yii2-websocket/zipball/8a52b72f37f4124e7e59ed697da516f9edc3701c",
+                "reference": "8a52b72f37f4124e7e59ed697da516f9edc3701c",
                 "shasum": ""
             },
             "require": {
@@ -1945,9 +1945,9 @@
             ],
             "support": {
                 "issues": "https://github.com/uzdevid/yii2-websocket/issues",
-                "source": "https://github.com/uzdevid/yii2-websocket/tree/1.0.2"
+                "source": "https://github.com/uzdevid/yii2-websocket/tree/1.0.3"
             },
-            "time": "2024-05-19T18:35:00+00:00"
+            "time": "2024-05-19T19:35:23+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
