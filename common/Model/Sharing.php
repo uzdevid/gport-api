@@ -17,7 +17,7 @@ class Sharing extends Base\Sharing {
             [['created_time'], 'safe'],
             [['key'], 'string', 'max' => 4],
             [['remote_address', 'local_address'], 'string', 'max' => 32],
-            [['connection_id'], 'string', 'length' => 36],
+            [['connection_id'], 'string', 'length' => 32],
             [['key'], 'unique'],
         ];
     }

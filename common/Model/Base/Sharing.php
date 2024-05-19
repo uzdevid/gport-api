@@ -42,7 +42,7 @@ class Sharing extends \yii\db\ActiveRecord
             [['key'], 'string', 'max' => 4],
             [['remote_address'], 'string', 'max' => 32],
             [['local_address'], 'string', 'max' => 64],
-            [['connection_id'], 'string', 'max' => 36],
+            [['connection_id'], 'string', 'max' => 32],
             [['key'], 'unique'],
         ];
     }
