@@ -5,6 +5,7 @@ namespace socket\Controller;
 use common\Model\Sharing;
 use Ramsey\Uuid\Uuid;
 use socket\Message\SharingResponse;
+use socket\Service\Dns;
 use UzDevid\WebSocket\Controller;
 use UzDevid\WebSocket\Server\Dto\Client;
 use Workerman\Timer;
@@ -17,6 +18,18 @@ class SharingController extends Controller {
      */
     public function actionShare(Client $client, array $payload): void {
         $sharing = new Sharing();
+
+        if (empty($payload['domain'])) {
+            $sharing->remote_address = sprintf('%s.gport.uz', $sharing->key);
+        } else if (!str_ends_with("gport.uz", $payload['domain']) && Dns::checkIp($payload['domain'], '85.92.110.145')) {
+            $domain = $payload['domain'];
+
+            if (parse_url($domain, PHP_URL_SCHEME) === null) {
+                $domain = sprintf("http://%s", $domain);
+            }
+
+            $sharing->remote_address = $domain;
+        }
 
         $sharing->key = strtolower(Yii::$app->security->generateRandomString(4));
         $sharing->user_id = Uuid::uuid4()->toString();
