@@ -37,10 +37,16 @@ class SharingController extends Controller {
             return;
         }
 
+        $localAddress = $payload['localAddress'];
+
+        if (!str_starts_with($payload['localAddress'], 'http://') && str_starts_with($payload['localAddress'], 'https://')) {
+            $localAddress = sprintf("http://%s", $payload['localAddress']);
+        }
+
         $sharing->remote_address = $remoteAddress;
         $sharing->user_id = Uuid::uuid4()->toString();
         $sharing->connection_id = $client->id;
-        $sharing->local_address = $payload['localAddress'];
+        $sharing->local_address = $localAddress;
         $sharing->active = 0;
         $sharing->is_active = true;
 
