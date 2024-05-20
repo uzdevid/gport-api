@@ -39,7 +39,7 @@ class SharingController extends Controller {
 
         $localAddress = $payload['localAddress'];
 
-        if (!str_starts_with($payload['localAddress'], 'http://') && str_starts_with($payload['localAddress'], 'https://')) {
+        if (!str_starts_with($payload['localAddress'], 'http://') && !str_starts_with($payload['localAddress'], 'https://')) {
             $localAddress = sprintf("http://%s", $payload['localAddress']);
         }
 
