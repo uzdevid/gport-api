@@ -4,6 +4,7 @@ namespace socket\Controller;
 
 use common\Model\Sharing;
 use Ramsey\Uuid\Uuid;
+use socket\Message\SharingResponse;
 use UzDevid\WebSocket\Controller;
 use UzDevid\WebSocket\Server\Dto\Client;
 use Workerman\Timer;
@@ -27,12 +28,9 @@ class SharingController extends Controller {
 
         $sharing->save();
 
-        $client->user->send('SharingResponse', [
-            'id' => $sharing->id,
-            'key' => $sharing->key,
-            'remoteAddress' => "https://" . $sharing->remote_address,
-            'localAddress' => $sharing->local_address,
-        ]);
+        $message = new SharingResponse($sharing);
+
+        $client->user->send('SharingResponse', $message);
 
         Timer::add(5, static function () use ($client) {
             $client->user->send("LocalClient:is-online", [date('Y-m-d H:i:s')]);
