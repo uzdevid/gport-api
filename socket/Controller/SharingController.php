@@ -28,7 +28,7 @@ class SharingController extends Controller {
             $domain = $payload['domain'];
             $sharing->remote_address = parse_url($domain, PHP_URL_HOST);
         } else {
-            $client->user->send(PrintMessage::methodName(), new PrintMessage(sprintf("Invalid domain: %s", $payload['domain'])));
+            $client->user->send(PrintMessage::methodName(), new PrintMessage(sprintf("[31mInvalid domain: %s[0m", $payload['domain'])));
             return;
         }
 
