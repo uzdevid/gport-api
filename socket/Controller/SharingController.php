@@ -34,6 +34,7 @@ class SharingController extends Controller {
 
         if ($isUsed) {
             $client->user->send(PrintMessage::methodName(), new PrintMessage(sprintf("[31mYou cannot use this domain at this time: %s[0m", $payload['domain'])));
+            return;
         }
 
         $sharing->remote_address = $remoteAddress;
