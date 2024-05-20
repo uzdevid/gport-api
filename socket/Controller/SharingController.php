@@ -23,17 +23,17 @@ class SharingController extends Controller {
         $sharing->key = strtolower(Yii::$app->security->generateRandomString(4));
 
         if (empty($payload['domain'])) {
-            $sharing->remote_address = sprintf('%s.gport.uz', $sharing->key);
+            $remoteAddress = sprintf('%s.gport.uz', $sharing->key);
         } else if (str_ends_with("gport.uz", $payload['domain'])) {
-            $sharing->remote_address = parse_url($payload['domain'], PHP_URL_HOST);
+            $remoteAddress = parse_url($payload['domain'], PHP_URL_HOST);
         } else if (Dns::checkIp($payload['domain'], '185.154.194.150')) {
-            $domain = $payload['domain'];
-            $sharing->remote_address = parse_url($domain, PHP_URL_HOST);
+            $remoteAddress = parse_url(str_starts_with("http", $payload['domain']) ? $payload['domain'] : sprintf("http://%s", $payload['domain']), PHP_URL_HOST);
         } else {
             $client->user->send(PrintMessage::methodName(), new PrintMessage(sprintf("[31mInvalid domain: %s[0m", $payload['domain'])));
             return;
         }
 
+        $sharing->remote_address = $remoteAddress;
         $sharing->user_id = Uuid::uuid4()->toString();
         $sharing->connection_id = $client->id;
         $sharing->local_address = $payload['localAddress'];
