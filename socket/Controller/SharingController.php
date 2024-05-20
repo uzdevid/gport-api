@@ -24,7 +24,7 @@ class SharingController extends Controller {
         if (empty($payload['domain'])) {
             $remoteAddress = sprintf('%s.gport.uz', $sharing->key);
         } else if (str_ends_with($payload['domain'], ".gport.uz")) {
-            $remoteAddress = parse_url(str_starts_with("http", $payload['domain']) ? $payload['domain'] : sprintf("http://%s", $payload['domain']), PHP_URL_HOST);
+            $remoteAddress = parse_url(str_starts_with($payload['domain'], "http") ? $payload['domain'] : sprintf("http://%s", $payload['domain']), PHP_URL_HOST);
         } else {
             $client->user->send(PrintMessage::methodName(), new PrintMessage(sprintf("[31mInvalid domain: %s[0m", $payload['domain'])));
             return;
