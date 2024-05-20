@@ -4,6 +4,7 @@ namespace socket\Controller;
 
 use common\Model\Sharing;
 use Ramsey\Uuid\Uuid;
+use socket\Message\PrintMessage;
 use socket\Message\SharingResponse;
 use socket\Service\Dns;
 use UzDevid\WebSocket\Controller;
@@ -25,12 +26,10 @@ class SharingController extends Controller {
             $sharing->remote_address = sprintf('%s.gport.uz', $sharing->key);
         } else if (!str_ends_with("gport.uz", $payload['domain']) && Dns::checkIp($payload['domain'], '85.92.110.145')) {
             $domain = $payload['domain'];
-
-            if (parse_url($domain, PHP_URL_SCHEME) === null) {
-                $domain = sprintf("http://%s", $domain);
-            }
-
             $sharing->remote_address = parse_url($domain, PHP_URL_HOST);
+        } else {
+            $client->user->send(PrintMessage::methodName(), new PrintMessage(sprintf("Invalid domain: %s", $payload['domain'])));
+            return;
         }
 
         $sharing->user_id = Uuid::uuid4()->toString();
