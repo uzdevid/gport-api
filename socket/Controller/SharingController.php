@@ -19,6 +19,8 @@ class SharingController extends Controller {
     public function actionShare(Client $client, array $payload): void {
         $sharing = new Sharing();
 
+        $sharing->key = strtolower(Yii::$app->security->generateRandomString(4));
+
         if (empty($payload['domain'])) {
             $sharing->remote_address = sprintf('%s.gport.uz', $sharing->key);
         } else if (!str_ends_with("gport.uz", $payload['domain']) && Dns::checkIp($payload['domain'], '85.92.110.145')) {
@@ -31,7 +33,6 @@ class SharingController extends Controller {
             $sharing->remote_address = $domain;
         }
 
-        $sharing->key = strtolower(Yii::$app->security->generateRandomString(4));
         $sharing->user_id = Uuid::uuid4()->toString();
         $sharing->connection_id = $client->id;
         $sharing->local_address = $payload['localAddress'];
