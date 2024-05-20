@@ -18,7 +18,7 @@ return [
         'class' => WebSocketServer::class,
         'host' => '0.0.0.0',
         'port' => 8080,
-        'count' => 1
+        'count' => 10
     ],
     'components' => [],
     'params' => $params,
