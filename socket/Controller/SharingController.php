@@ -24,7 +24,9 @@ class SharingController extends Controller {
 
         if (empty($payload['domain'])) {
             $sharing->remote_address = sprintf('%s.gport.uz', $sharing->key);
-        } else if (!str_ends_with("gport.uz", $payload['domain']) && Dns::checkIp($payload['domain'], '185.154.194.150')) {
+        } else if (str_ends_with("gport.uz", $payload['domain'])) {
+            $sharing->remote_address = parse_url($payload['domain'], PHP_URL_HOST);
+        } else if (Dns::checkIp($payload['domain'], '185.154.194.150')) {
             $domain = $payload['domain'];
             $sharing->remote_address = parse_url($domain, PHP_URL_HOST);
         } else {
