@@ -30,7 +30,7 @@ class SharingController extends Controller {
                 $domain = sprintf("http://%s", $domain);
             }
 
-            $sharing->remote_address = $domain;
+            $sharing->remote_address = parse_url($domain, PHP_URL_HOST);
         }
 
         $sharing->user_id = Uuid::uuid4()->toString();
