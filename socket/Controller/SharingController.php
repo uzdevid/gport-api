@@ -30,6 +30,12 @@ class SharingController extends Controller {
             return;
         }
 
+        $isUsed = Sharing::find()->where(['remote_address' => $remoteAddress, 'is_active' => true])->exists();
+
+        if ($isUsed) {
+            $client->user->send(PrintMessage::methodName(), new PrintMessage(sprintf("[31mYou cannot use this domain at this time: %s[0m", $payload['domain'])));
+        }
+
         $sharing->remote_address = $remoteAddress;
         $sharing->user_id = Uuid::uuid4()->toString();
         $sharing->connection_id = $client->id;
