@@ -5,6 +5,7 @@ namespace socket\Controller;
 use common\Model\Sharing;
 use socket\Message\PrintMessage;
 use socket\Message\SharingResponse;
+use Throwable;
 use UzDevid\WebSocket\Controller;
 use UzDevid\WebSocket\Server\Dto\Client;
 use Workerman\Timer;
@@ -31,7 +32,7 @@ class SharingController extends Controller {
             return;
         }
 
-        $isUsed = Sharing::find()->where(['remote_address' => $remoteAddress, 'is_active' => true])->exists();
+        $isUsed = Sharing::find()->where(['remote' => $remoteAddress, 'is_active' => true])->exists();
 
         if ($isUsed) {
             $client->user->send(PrintMessage::methodName(), new PrintMessage(sprintf("[31mYou cannot use this domain at this time: %s[0m", $payload['domain'])));
@@ -54,7 +55,11 @@ class SharingController extends Controller {
         $sharing->active = 0;
         $sharing->is_active = true;
 
-        $sharing->save();
+        try {
+            $sharing->save();
+        } catch (Throwable $exception) {
+            Console::stdout($exception->getMessage());
+        }
 
         Console::stdout(Json::encode($sharing->errors));
         Console::stdout("\r\n------------------------\r\n");
