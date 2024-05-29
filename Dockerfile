@@ -21,7 +21,7 @@ RUN composer install
 
 RUN php init --env=Production --overwrite=All --delete=All
 
-RUN php yii migrate --interactive=0
+#RUN php yii migrate --interactive=0
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 RUN chmod +x /etc/supervisor/conf.d/supervisord.conf
