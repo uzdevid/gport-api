@@ -28,10 +28,10 @@ class AppController extends Controller {
         $client = Yii::$app->webSocketClient;
 
         $client->send('local-client:call-address', [
-            'connectionId' => $sharing->connection_id,
+            'connectionId' => $sharing->client_id,
             'requestId' => $requestId,
             //
-            'address' => $sharing->local_address . $_SERVER['REQUEST_URI'] . "?" . http_build_query(Yii::$app->request->queryParams),
+            'address' => $sharing->local . $_SERVER['REQUEST_URI'] . "?" . http_build_query(Yii::$app->request->queryParams),
             'request' => [
                 'method' => Yii::$app->request->method,
                 'headers' => Yii::$app->request->headers->toArray(),
