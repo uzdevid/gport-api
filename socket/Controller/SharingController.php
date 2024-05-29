@@ -19,10 +19,10 @@ class SharingController extends Controller {
     public function actionShare(Client $client, array $payload): void {
         $sharing = new Sharing();
 
-        $sharing->key = strtolower(Yii::$app->security->generateRandomString(4));
+        $key = strtolower(Yii::$app->security->generateRandomString(4));
 
         if (empty($payload['domain'])) {
-            $remoteAddress = sprintf('%s.gport.uz', $sharing->key);
+            $remoteAddress = sprintf('%s.gport.uz', $key);
         } else if (str_ends_with($payload['domain'], ".gport.uz")) {
             $remoteAddress = parse_url(str_starts_with($payload['domain'], "http") ? $payload['domain'] : sprintf("http://%s", $payload['domain']), PHP_URL_HOST);
         } else {
@@ -43,10 +43,12 @@ class SharingController extends Controller {
             $localAddress = sprintf("http://%s", $localAddress);
         }
 
-        $sharing->remote_address = $remoteAddress;
-        $sharing->user_id = Uuid::uuid4()->toString();
-        $sharing->connection_id = $client->id;
-        $sharing->local_address = $localAddress;
+        $sharing->access_id = "6f8c215b-4e79-4828-9dc6-6af18bb9795e";
+        $sharing->remote = $remoteAddress;
+        $sharing->protocol = "http";
+        $sharing->user_id = "c5a58a61-584e-46df-9844-1460a5c1a9ff";
+        $sharing->client_id = $client->id;
+        $sharing->local = $localAddress;
         $sharing->active = 0;
         $sharing->is_active = true;
 

@@ -10,15 +10,15 @@ class Sharing extends Base\Sharing {
      */
     public function rules(): array {
         return [
-            [['user_id', 'key', 'remote_address', 'local_address', 'connection_id', 'active', 'is_active'], 'required'],
-            [['user_id'], 'string'],
+            [['user_id', 'access_id', 'client_id', 'protocol', 'remote', 'local', 'active', 'is_active'], 'required'],
+            [['user_id', 'access_id'], 'string'],
+            [['active'], 'default', 'value' => null],
             [['active'], 'integer'],
             [['is_active'], 'boolean'],
             [['created_time'], 'safe'],
-            [['key'], 'string', 'max' => 4],
-            [['remote_address', 'local_address'], 'string', 'max' => 32],
-            [['connection_id'], 'string', 'length' => 32],
-            [['key'], 'unique'],
+            [['client_id', 'remote'], 'string', 'max' => 32],
+            [['protocol'], 'string', 'max' => 12],
+            [['local'], 'string', 'max' => 64],
         ];
     }
 

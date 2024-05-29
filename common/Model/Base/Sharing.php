@@ -9,13 +9,17 @@ use Yii;
  *
  * @property int $id
  * @property string $user_id
- * @property string $key
- * @property string $remote_address
- * @property string $local_address
- * @property string $connection_id
+ * @property string $access_id
+ * @property string $client_id
+ * @property string $protocol
+ * @property string $remote
+ * @property string $local
  * @property int $active
  * @property bool $is_active
  * @property string $created_time
+ *
+ * @property Access $access
+ * @property Traffic[] $traffics
  */
 class Sharing extends \yii\db\ActiveRecord
 {
@@ -33,17 +37,16 @@ class Sharing extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'key', 'remote_address', 'local_address', 'connection_id', 'active', 'is_active', 'created_time'], 'required'],
-            [['user_id'], 'string'],
+            [['user_id', 'access_id', 'client_id', 'protocol', 'remote', 'local', 'active', 'is_active', 'created_time'], 'required'],
+            [['user_id', 'access_id'], 'string'],
             [['active'], 'default', 'value' => null],
             [['active'], 'integer'],
             [['is_active'], 'boolean'],
             [['created_time'], 'safe'],
-            [['key'], 'string', 'max' => 4],
-            [['remote_address'], 'string', 'max' => 32],
-            [['local_address'], 'string', 'max' => 64],
-            [['connection_id'], 'string', 'max' => 32],
-            [['key'], 'unique'],
+            [['client_id', 'remote'], 'string', 'max' => 32],
+            [['protocol'], 'string', 'max' => 12],
+            [['local'], 'string', 'max' => 64],
+            [['access_id'], 'exist', 'skipOnError' => true, 'targetClass' => Access::class, 'targetAttribute' => ['access_id' => 'id']],
         ];
     }
 
@@ -55,13 +58,34 @@ class Sharing extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'user_id' => 'User ID',
-            'key' => 'Key',
-            'remote_address' => 'Remote Address',
-            'local_address' => 'Local Address',
-            'connection_id' => 'Connection ID',
+            'access_id' => 'Access ID',
+            'client_id' => 'Client ID',
+            'protocol' => 'Protocol',
+            'remote' => 'Remote',
+            'local' => 'Local',
             'active' => 'Active',
             'is_active' => 'Is Active',
             'created_time' => 'Created Time',
         ];
+    }
+
+    /**
+     * Gets query for [[Access]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAccess()
+    {
+        return $this->hasOne(Access::class, ['id' => 'access_id']);
+    }
+
+    /**
+     * Gets query for [[Traffics]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTraffics()
+    {
+        return $this->hasMany(Traffic::class, ['sharing_id' => 'id']);
     }
 }
