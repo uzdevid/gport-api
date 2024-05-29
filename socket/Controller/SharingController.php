@@ -10,6 +10,8 @@ use UzDevid\WebSocket\Server\Dto\Client;
 use Workerman\Timer;
 use Yii;
 use yii\base\Exception;
+use yii\helpers\Console;
+use yii\helpers\Json;
 
 class SharingController extends Controller {
     /**
@@ -42,19 +44,20 @@ class SharingController extends Controller {
             $localAddress = sprintf("http://%s", $localAddress);
         }
 
-        $sharing->access_id = "6f8c215b-4e79-4828-9dc6-6af18bb9795e";
         $sharing->user_id = "c5a58a61-584e-46df-9844-1460a5c1a9ff";
+        $sharing->access_id = "6f8c215b-4e79-4828-9dc6-6af18bb9795e";
+        $sharing->client_id = $client->id;
+        $sharing->protocol = "http";
 
         $sharing->remote = $remoteAddress;
-        $sharing->protocol = "http";
-        $sharing->client_id = $client->id;
         $sharing->local = $localAddress;
         $sharing->active = 0;
         $sharing->is_active = true;
 
         $sharing->save();
 
-        print_r($sharing->errors);
+        Console::stdout(Json::encode($sharing->errors));
+        Console::stdout("\r\n------------------------\r\n");
 
         $message = new SharingResponse($sharing);
 
