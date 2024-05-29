@@ -27,7 +27,7 @@ class EventHandler implements BootstrapInterface {
         });
 
         $app->on(CloseConnection::class, function (CloseConnection $event) {
-            $sharing = Sharing::find()->where(['connection_id' => $event->client->id])->one();
+            $sharing = Sharing::find()->where(['client_id' => $event->client->id])->one();
 
             if (is_null($sharing)) {
                 return;
